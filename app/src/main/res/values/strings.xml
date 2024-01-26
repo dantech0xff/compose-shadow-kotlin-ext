@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">compose-shadow</string>
+    <string name="item_shape">Item Shape</string>
+    <string name="height">Height</string>
+    <string name="radius">Radius</string>
+    <string name="shadow">Shadow</string>
+    <string name="offsetx">OffsetX</string>
+    <string name="offsety">OffsetY</string>
+    <string name="spread">Spread</string>
+    <string name="blur_radius">Blur Radius</string>
+    <string name="shadow_color">Shadow Color</string>
+</resources>
