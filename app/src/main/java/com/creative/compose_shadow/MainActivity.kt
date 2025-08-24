@@ -28,26 +28,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.creative.compose_shadow.shadow.ShadowUiState
 import com.creative.compose_shadow.ui.custom.ColorPicker
 import com.creative.compose_shadow.ui.custom.ColorPickerState
 import com.creative.compose_shadow.ui.custom.TitleHeader
 import com.creative.compose_shadow.ui.custom.TitleSlider
-import com.creative.compose_shadow.ui.shadow
+import com.creative.compose_shadow.shadow.shadow
 import com.creative.compose_shadow.ui.theme.ComposeShadowTheme
 
-data class ShadowState(
-    val shadowColor: Color,
-    val mainRadius: Float,
-    val shadowBorderRadius: Float,
-    val blurRadius: Float,
-    val offsetY: Float,
-    val offsetX: Float,
-    val spread: Float,
-    val height: Float
-)
-
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalFoundationApi::class)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -55,12 +45,11 @@ class MainActivity : ComponentActivity() {
             ComposeShadowTheme {
                 Surface(
                     modifier = Modifier
-                        .safeGesturesPadding()
                         .fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    var shadowState by remember {
-                        mutableStateOf(ShadowState(Color.Black.copy(alpha = 0.2f), 16f, 16f, 16f, 0f, 0f, 0f, 64f))
+                    var shadowUiState by remember {
+                        mutableStateOf(ShadowUiState(Color.Black.copy(alpha = 0.2f), 16f, 16f, 16f, 0f, 0f, 0f, 64f))
                     }
                     val text by remember { mutableStateOf("Draw your content here") }
 
@@ -69,18 +58,18 @@ class MainActivity : ComponentActivity() {
                     ) {
                         Box(
                             modifier = Modifier
-                                .padding(vertical = 60.dp, horizontal = 42.dp)
+                                .padding(100.dp)
                                 .shadow(
-                                    shadowState.shadowColor,
-                                    borderRadius = shadowState.shadowBorderRadius.dp,
-                                    offsetX = shadowState.offsetX.dp,
-                                    offsetY = shadowState.offsetY.dp,
-                                    spread = shadowState.spread.dp,
-                                    blurRadius = shadowState.blurRadius.dp
+                                    shadowUiState.shadowColor,
+                                    borderRadius = shadowUiState.shadowBorderRadius.dp,
+                                    offsetX = shadowUiState.offsetX.dp,
+                                    offsetY = shadowUiState.offsetY.dp,
+                                    spread = shadowUiState.spread.dp,
+                                    blurRadius = shadowUiState.blurRadius.dp
                                 )
                                 .fillMaxWidth()
-                                .height(shadowState.height.dp)
-                                .clip(RoundedCornerShape(shadowState.mainRadius.dp))
+                                .height(shadowUiState.height.dp)
+                                .clip(RoundedCornerShape(shadowUiState.mainRadius.dp))
                                 .background(Color.White)
                         ) {
                             Text(
@@ -90,47 +79,48 @@ class MainActivity : ComponentActivity() {
                         }
 
                         LazyColumn(
-                            modifier = Modifier, verticalArrangement = Arrangement.spacedBy(1.dp)
+                            modifier = Modifier.padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(1.dp)
                         ) {
                             stickyHeader {
                                 TitleHeader(getString(R.string.item_shape))
                             }
                             item {
-                                TitleSlider(title = getString(R.string.height), from = 0f, to = 200f, currentValue = shadowState.height) {
-                                    shadowState = shadowState.copy(height = it)
+                                TitleSlider(title = getString(R.string.height), from = 0f, to = 200f, currentValue = shadowUiState.height) {
+                                    shadowUiState = shadowUiState.copy(height = it)
                                 }
                             }
                             item {
-                                TitleSlider(title = getString(R.string.radius), from = 0f, to = 80f, currentValue = shadowState.mainRadius) {
-                                    shadowState = shadowState.copy(mainRadius = it)
+                                TitleSlider(title = getString(R.string.radius), from = 0f, to = 80f, currentValue = shadowUiState.mainRadius) {
+                                    shadowUiState = shadowUiState.copy(mainRadius = it)
                                 }
                             }
                             stickyHeader {
                                 TitleHeader(getString(R.string.shadow))
                             }
                             item {
-                                TitleSlider(title = getString(R.string.radius), from = 0f, to = 80f, currentValue = shadowState.shadowBorderRadius) {
-                                    shadowState = shadowState.copy(shadowBorderRadius = it)
+                                TitleSlider(title = getString(R.string.radius), from = 0f, to = 80f, currentValue = shadowUiState.shadowBorderRadius) {
+                                    shadowUiState = shadowUiState.copy(shadowBorderRadius = it)
                                 }
                             }
                             item {
-                                TitleSlider(title = getString(R.string.offsetx), from = 0f, to = 80f, currentValue = shadowState.offsetX) {
-                                    shadowState = shadowState.copy(offsetX = it)
+                                TitleSlider(title = getString(R.string.offsetx), from = 0f, to = 80f, currentValue = shadowUiState.offsetX) {
+                                    shadowUiState = shadowUiState.copy(offsetX = it)
                                 }
                             }
                             item {
-                                TitleSlider(title = getString(R.string.offsety), from = 0f, to = 80f, currentValue = shadowState.offsetY) {
-                                    shadowState = shadowState.copy(offsetY = it)
+                                TitleSlider(title = getString(R.string.offsety), from = 0f, to = 80f, currentValue = shadowUiState.offsetY) {
+                                    shadowUiState = shadowUiState.copy(offsetY = it)
                                 }
                             }
                             item {
-                                TitleSlider(title = getString(R.string.spread), from = 0f, to = 80f, currentValue = shadowState.spread) {
-                                    shadowState = shadowState.copy(spread = it)
+                                TitleSlider(title = getString(R.string.spread), from = 0f, to = 80f, currentValue = shadowUiState.spread) {
+                                    shadowUiState = shadowUiState.copy(spread = it)
                                 }
                             }
                             item {
-                                TitleSlider(title = getString(R.string.blur_radius), from = 0f, to = 80f, currentValue = shadowState.blurRadius) {
-                                    shadowState = shadowState.copy(blurRadius = it)
+                                TitleSlider(title = getString(R.string.blur_radius), from = 0f, to = 80f, currentValue = shadowUiState.blurRadius) {
+                                    shadowUiState = shadowUiState.copy(blurRadius = it)
                                 }
                             }
                             stickyHeader {
@@ -139,13 +129,13 @@ class MainActivity : ComponentActivity() {
                             item {
                                 ColorPicker(
                                     state = ColorPickerState(
-                                        shadowState.shadowColor.red,
-                                        shadowState.shadowColor.green,
-                                        shadowState.shadowColor.blue,
-                                        shadowState.shadowColor.alpha
+                                        shadowUiState.shadowColor.red,
+                                        shadowUiState.shadowColor.green,
+                                        shadowUiState.shadowColor.blue,
+                                        shadowUiState.shadowColor.alpha
                                     )
                                 ) {
-                                    shadowState = shadowState.copy(shadowColor = it)
+                                    shadowUiState = shadowUiState.copy(shadowColor = it)
                                 }
                             }
                         }

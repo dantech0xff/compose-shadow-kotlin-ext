@@ -1,4 +1,4 @@
-package com.creative.compose_shadow.ui
+package com.creative.compose_shadow.shadow
 
 import android.graphics.BlurMaskFilter
 import androidx.compose.runtime.Stable
