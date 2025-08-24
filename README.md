@@ -8,11 +8,9 @@ This project showcases a custom `shadow` modifier for Jetpack Compose that goes 
 
 ## 📸 Screenshots & Demo
 
-### App Screenshot
-<img src="app/graphics/ss_001.png" alt="Compose Shadow Demo Screenshot" width="300"/>
-
-### Live Demo
-<img src="app/graphics/ss_002.gif" alt="Compose Shadow Live Demo" width="300"/>
+| App Screenshot | Live Demo |
+|:---:|:---:|
+| <img src="app/graphics/ss_001.png" alt="Compose Shadow Demo Screenshot" width="300"/> | <img src="app/graphics/ss_002.gif" alt="Compose Shadow Live Demo" width="300"/> |
 
 *The GIF above shows real-time shadow customization with interactive controls for blur radius, offset, spread, color, and border radius.*
 
